@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="background">
+
+    <div class="container">
+        <header>
+            <h1 class="text-center">TV Remote</h1>
+        </header>
+        <table class="table text-center borderless">
+            <tr>
+                <td>
+                    <button type="button" class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FDF00F">入力切換</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this)" value="2FDBE41">CS</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="sendRequest(this)" value="2FD48B7">電源</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FDDE21">地アナ</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD5EA1">地デジ</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD3EC1">BS</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD807F">1</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD40BF">2</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FDC03F">3</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD20DF">4</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FDA05F">5</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD609F">6</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FDE01F">7</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD10EF">8</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD906F">9</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD50AF">10</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FDD02F">11</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD30CF">12</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FDD827">Up</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="resetIp(true)" value="2FDF00F">リセット</button>
+                </td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this);" value="2FD58A7">Up</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="color:#1485e0;">チャンネル</span>
+                </td>
+                <td></td>
+                <td>
+                    <span style="color:#1485e0;">音量</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this)" value="2FDF807">Down</button>
+                </td>
+                <td></td>
+                <td>
+                    <button class="btn-remote btn btn-default" onclick="sendRequest(this)" value="2FD7887">Down</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-default btn-remote" onclick="sendRequest(this)" value="27D2CD3">レグザリンク</button>
+                </td>
+                <td>
+                    <button class="btn btn-default btn-remote" onclick="sendRequest(this)" value="2FD7C83">UP</button>
+                </td>
+                <td>
+                    <button class="btn btn-default btn-remote" onclick="sendRequest(this)" value="2FD7689">番組表</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-default btn-remote" onclick="sendRequest(this)" value="2FDFA05">LEFT</button>
+                </td>
+                <td>
+                    <button class="btn btn-default btn-remote" onclick="sendRequest(this)" value="2FDBC43">決定</button>
+                </td>
+                <td>
+                    <button class="btn btn-default btn-remote" onclick="sendRequest(this)" value="2FDDA25">RIGHT</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-default btn-remote" onclick="sendRequest(this)" value="2FDDC23">戻る</button>
+                </td>
+                <td>
+                    <button class="btn btn-default btn-remote" onclick="sendRequest(this)" value="2FDFC03">DOWN</button>
+                </td>
+                <td>
+                    <button class="btn btn-default btn-remote" onclick="sendRequest(this);" value="2FD3CC3">終了</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        var connection = new WebSocket('ws://192.168.2.104:8011/', ['webClient']);
+        console.log("connection: ", connection);
+        connection.onopen = function () {
+            connection.send('Message from Browser to ESP8266 yay its Working!! ' + new Date());
+            connection.send('ping');
+
+            /*	setInterval(function() {
+                    connection.send('Time: ' + new Date()); 
+                }, 20);
+            */
+            connection.send('Time: ' + new Date());
+        };
+
+        connection.onerror = function (error) {
+            console.log('WebSocket Error ', error);
+        };
+
+        connection.onmessage = function (e) {
+            console.log('Server: ', e.data);
+            //connection.send('Time: ' + new Date());
+        };
+
+        // document.onreadystatechange = function () {
+        //     if (document.readyState == "complete") {
+        //         resetIp(false);
+        //     }
+        // }
+
+        // function resetIp(flag) {
+        //     var ipAddress = localStorage.getItem('espIpAddress');
+        //     if (!ipAddress || flag) {
+        //         var ipPattern = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
+        //         var input = prompt("enter ip address", "");
+        //         if (!input) {
+        //             if (ipAddress) {
+        //                 input = ipAddress;
+        //             } else {
+        //                 input = '127.0.0.1';
+        //             }
+        //         }
+        //         if (!ipPattern.test(input)) {
+        //             input = '127.0.0.1';
+        //         }
+        //         localStorage.setItem('espIpAddress', input);
+        //     }
+        //     document.activeElement.blur();
+        // }
+
+
+
+        function sendRequest(item) {
+            var ipAddress = localStorage.getItem('espIpAddress');
+            connection.send(item.value);
+            document.activeElement.blur();
+        }
+    </script>
+</body>
+
+</html>

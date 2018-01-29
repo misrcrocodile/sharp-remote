@@ -1,0 +1,49 @@
+.borderless td,
+.borderless th {
+    border: none !important;
+}
+
+.container {
+    padding-top: 10px;
+    background-color: #c4e1f7;
+}
+
+.btn-danger {
+    width: 100%;
+    height: 60px;
+}
+
+.btn-default:hover,
+:active,
+:focus {
+    corlor: white !important;
+}
+
+.btn-remote {
+    width: 100%;
+    height: 60px;
+    color: #1485e0;
+    border-color: #7bbaee;
+    border-width: 2px;
+}
+
+.btn-remove:hover {
+    color: white;
+    background-color: #e6e6e6;
+    border-color: #1485e0;
+}
+
+.btn-default:hover,
+:active,
+:focus {
+    color: #1485e0 !important;
+    border-color: #1485e0 !important;
+}
+
+td {
+    width: 33.33%;
+}
+
+h1 {
+    color: #1485e0;
+}

@@ -155,11 +155,6 @@
         connection.onopen = function () {
             connection.send('Message from Browser to ESP8266 yay its Working!! ' + new Date());
             connection.send('ping');
-
-            /*	setInterval(function() {
-                    connection.send('Time: ' + new Date()); 
-                }, 20);
-            */
             connection.send('Time: ' + new Date());
         };
 
@@ -169,36 +164,7 @@
 
         connection.onmessage = function (e) {
             console.log('Server: ', e.data);
-            //connection.send('Time: ' + new Date());
         };
-
-        // document.onreadystatechange = function () {
-        //     if (document.readyState == "complete") {
-        //         resetIp(false);
-        //     }
-        // }
-
-        // function resetIp(flag) {
-        //     var ipAddress = localStorage.getItem('espIpAddress');
-        //     if (!ipAddress || flag) {
-        //         var ipPattern = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
-        //         var input = prompt("enter ip address", "");
-        //         if (!input) {
-        //             if (ipAddress) {
-        //                 input = ipAddress;
-        //             } else {
-        //                 input = '127.0.0.1';
-        //             }
-        //         }
-        //         if (!ipPattern.test(input)) {
-        //             input = '127.0.0.1';
-        //         }
-        //         localStorage.setItem('espIpAddress', input);
-        //     }
-        //     document.activeElement.blur();
-        // }
-
-
 
         function sendRequest(item) {
             var ipAddress = localStorage.getItem('espIpAddress');

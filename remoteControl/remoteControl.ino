@@ -13,17 +13,18 @@
 
 #include <Hash.h>
 
+#define USE_SERIAL Serial
+
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
+
 int gpio0_pin = 0;
 int gpio2_pin = 2;
 
-const char* ssid = "602HWa-3AB5F1"; // your ssid
-const char* password = "0165047a"; // your password
-const char* socketUrl = "shrouded-peak-81739.herokuapp.com"; // 192.168.0.1:8080
-const int port = 80;
-
-
+const char* ssid = ""; 			// your ssid
+const char* password = ""; 		// your password
+const char* socketUrl = ""; 	// 192.168.0.1:8080
+const int port = 80;			// open port
 
 uint16_t BUTTON_ON_OFF[99]                  = {3350,1700, 400,400, 450,1200, 450,400, 450,1250, 400,400, 400,1300, 400,400, 400,1250, 450,400, 400,1250, 400,400, 450,1250, 400,1250, 400,400, 450,1250, 400,400, 450,1250, 400,1250, 400,1300, 400,1250, 400,400, 400,400, 450,400, 450,1200, 450,400, 400,1300, 400,400, 400,400, 450,1250, 400,400, 450,400, 400,400, 450,400, 450,1250, 400,1250, 400,400, 450,1250, 400,400, 450,400, 400,400, 450,1250, 400,400, 450,400, 400,400, 450,1250, 400,400, 450,1200, 450,1250, 400};  // UNKNOWN 1588B233
 uint16_t BUTTON_REGULAR_PROGRAM[99]         = {3350,1700, 400,400, 400,1250, 400,400, 450,1250, 400,400, 450,1250, 400,400, 450,1250, 400,400, 450,1200, 450,400, 400,1300, 400,1250, 400,300, 500,1300, 400,400, 400,1250, 450,1200, 450,1250, 400,1250, 400,400, 450,400, 400,450, 400,1250, 400,400, 450,1250, 400,400, 450,400, 400,1300, 400,400, 400,400, 450,400, 400,1300, 400,1250, 400,400, 450,1250, 400,400, 400,1300, 400,400, 400,1250, 400,400, 450,1250, 400,400, 450,400, 450,400, 400,400, 450,400, 400,1250, 450};  // UNKNOWN 8C10E31
@@ -74,67 +75,63 @@ uint16_t BUTTON_RED[99]                     = {3350,1700, 400,400, 400,1300, 400
 uint16_t BUTTON_GREEN[99]                   = {3350,1700, 400,300, 500,1300, 400,400, 400,1250, 450,400, 400,1250, 400,400, 450,1250, 400,400, 450,1250, 400,400, 450,1250, 400,1250, 400,400, 450,1250, 400,400, 450,1200, 450,1250, 400,1250, 400,1250, 450,400, 400,400, 450,400, 400,1300, 400,400, 400,1250, 400,350, 500,400, 450,1250, 400,400, 450,400, 400,400, 450,400, 400,1300, 400,400, 400,400, 450,400, 400,450, 400,400, 450,1200, 450,400, 450,1250, 400,400, 400,350, 500,1250, 400,1250, 400,450, 400,400, 450};  // UNKNOWN 1777F966
 uint16_t BUTTON_YELLOW[99]                  = {3350,1700, 400,400, 400,1300, 400,400, 400,1250, 400,400, 450,1250, 400,400, 450,1250, 400,400, 450,1200, 450,400, 450,1250, 400,1250, 400,400, 450,1250, 400,400, 400,1300, 400,1250, 400,1250, 400,1250, 400,400, 450,400, 450,400, 400,1250, 400,450, 400,1250, 400,400, 450,400, 450,1250, 400,400, 400,400, 450,400, 450,1250, 400,1250, 400,400, 450,400, 400,400, 450,400, 450,400, 400,1250, 400,400, 450,1250, 400,400, 450,400, 400,450, 400,1250, 400,400, 450,400, 450};  // UNKNOWN A4C6836E
 
-
-
 IRsend irsend(gpio2_pin);
 
-#define USE_SERIAL Serial
 boolean compareString(uint8_t * input, char * comparator) {
-  String strInput = (char *) input;
-  if(strInput == comparator) return true;
-  return false;
+	String strInput = (char *) input;
+	if(strInput == comparator) return true;
+	return false;
 }
 void handleToshibaArgs(uint8_t * input) {
-if(compareString(input,"BUTTON_ON_OFF")) {irsend.sendRaw(BUTTON_ON_OFF,99, 38);return;}
-if(compareString(input,"BUTTON_REGULAR_PROGRAM")) {irsend.sendRaw(BUTTON_REGULAR_PROGRAM,99, 38);return;}
-if(compareString(input,"BUTTON_SCREEN_DISPLAY")) {irsend.sendRaw(BUTTON_SCREEN_DISPLAY,99, 38);return;}
-if(compareString(input,"BUTTON_INTERNET")) {irsend.sendRaw(BUTTON_INTERNET,99, 38);return;}
-if(compareString(input,"BUTTON_SUBTITLE")) {irsend.sendRaw(BUTTON_SUBTITLE,99, 38);return;}
-if(compareString(input,"BUTTON_THREE_CHARACTER_INPUT")) {irsend.sendRaw(BUTTON_THREE_CHARACTER_INPUT,99, 38);return;}
-if(compareString(input,"BUTTON_VOD_OPERATION")) {irsend.sendRaw(BUTTON_VOD_OPERATION,99, 38);return;}
-if(compareString(input,"BUTTON_ONE")) {irsend.sendRaw(BUTTON_ONE,99, 38);return;}
-if(compareString(input,"BUTTON_TWO")) {irsend.sendRaw(BUTTON_TWO,99, 38);return;}
-if(compareString(input,"BUTTON_THREE")) {irsend.sendRaw(BUTTON_THREE,99, 38);return;}
-if(compareString(input,"BUTTON_FOUR")) {irsend.sendRaw(BUTTON_FOUR,99, 38);return;}
-if(compareString(input,"BUTTON_FIVE")) {irsend.sendRaw(BUTTON_FIVE,99, 38);return;}
-if(compareString(input,"BUTTON_SIX")) {irsend.sendRaw(BUTTON_SIX,99, 38);return;}
-if(compareString(input,"BUTTON_SEVEN")) {irsend.sendRaw(BUTTON_SEVEN,99, 38);return;}
-if(compareString(input,"BUTTON_EIGHT")) {irsend.sendRaw(BUTTON_EIGHT,99, 38);return;}
-if(compareString(input,"BUTTON_NINE")) {irsend.sendRaw(BUTTON_NINE,99, 38);return;}
-if(compareString(input,"BUTTON_TEN")) {irsend.sendRaw(BUTTON_TEN,99, 38);return;}
-if(compareString(input,"BUTTON_ELEVENT")) {irsend.sendRaw(BUTTON_ELEVENT,99, 38);return;}
-if(compareString(input,"BUTTON_TWELVE")) {irsend.sendRaw(BUTTON_TWELVE,99, 38);return;}
-if(compareString(input,"BUTTON_GROUND_D")) {irsend.sendRaw(BUTTON_GROUND_D,99, 38);return;}
-if(compareString(input,"BUTTON_BS")) {irsend.sendRaw(BUTTON_BS,99, 38);return;}
-if(compareString(input,"BUTTON_CS")) {irsend.sendRaw(BUTTON_CS,99, 38);return;}
-if(compareString(input,"BUTTON_GROUND_A")) {irsend.sendRaw(BUTTON_GROUND_A,99, 38);return;}
-if(compareString(input,"BUTTON_MUTE")) {irsend.sendRaw(BUTTON_MUTE,99, 38);return;}
-if(compareString(input,"BUTTON_VOLUME_UP")) {irsend.sendRaw(BUTTON_VOLUME_UP,99, 38);return;}
-if(compareString(input,"BUTTON_VOLUME_DOWN")) {irsend.sendRaw(BUTTON_VOLUME_DOWN,99, 38);return;}
-if(compareString(input,"BUTTON_CHANNEL_UP")) {irsend.sendRaw(BUTTON_CHANNEL_UP,99, 38);return;}
-if(compareString(input,"BUTTON_CHANNEL_DOWN")) {irsend.sendRaw(BUTTON_CHANNEL_DOWN,99, 38);return;}
-if(compareString(input,"BUTTON_SWITCH_INPUT")) {irsend.sendRaw(BUTTON_SWITCH_INPUT,99, 38);return;}
-if(compareString(input,"BUTTON_DATA_LINK")) {irsend.sendRaw(BUTTON_DATA_LINK,99, 38);return;}
-if(compareString(input,"BUTTON_AV_POSITION")) {irsend.sendRaw(BUTTON_AV_POSITION,99, 38);return;}
-if(compareString(input,"BUTTON_OFF_TIMER")) {irsend.sendRaw(BUTTON_OFF_TIMER,99, 38);return;}
-if(compareString(input,"BUTTON_FAMI_LINK")) {irsend.sendRaw(BUTTON_FAMI_LINK,99, 38);return;}
-if(compareString(input,"BUTTON_SCHEDULE")) {irsend.sendRaw(BUTTON_SCHEDULE,99, 38);return;}
-if(compareString(input,"BUTTON_HOME")) {irsend.sendRaw(BUTTON_HOME,99, 38);return;}
-if(compareString(input,"BUTTON_CHANNEL_INFO")) {irsend.sendRaw(BUTTON_CHANNEL_INFO,99, 38);return;}
-if(compareString(input,"BUTTON_TOOL")) {irsend.sendRaw(BUTTON_TOOL,99, 38);return;}
-if(compareString(input,"BUTTON_UP")) {irsend.sendRaw(BUTTON_UP,99, 38);return;}
-if(compareString(input,"BUTTON_LEFT")) {irsend.sendRaw(BUTTON_LEFT,99, 38);return;}
-if(compareString(input,"BUTTON_ENTER")) {irsend.sendRaw(BUTTON_ENTER,99, 38);return;}
-if(compareString(input,"BUTTON_RIGHT")) {irsend.sendRaw(BUTTON_RIGHT,99, 38);return;}
-if(compareString(input,"BUTTON_DOWN")) {irsend.sendRaw(BUTTON_DOWN,99, 38);return;}
-if(compareString(input,"BUTTON_FINISH")) {irsend.sendRaw(BUTTON_FINISH,99, 38);return;}
-if(compareString(input,"BUTTON_BACK")) {irsend.sendRaw(BUTTON_BACK,99, 38);return;}
-if(compareString(input,"BUTTON_BLUE")) {irsend.sendRaw(BUTTON_BLUE,99, 38);return;}
-if(compareString(input,"BUTTON_RED")) {irsend.sendRaw(BUTTON_RED,99, 38);return;}
-if(compareString(input,"BUTTON_GREEN")) {irsend.sendRaw(BUTTON_GREEN,99, 38);return;}
-if(compareString(input,"BUTTON_YELLOW")) {irsend.sendRaw(BUTTON_YELLOW,99, 38);return;}
-
-  delay(200);
+	if(compareString(input,"BUTTON_ON_OFF")) {irsend.sendRaw(BUTTON_ON_OFF,99, 38);return;}
+	if(compareString(input,"BUTTON_REGULAR_PROGRAM")) {irsend.sendRaw(BUTTON_REGULAR_PROGRAM,99, 38);return;}
+	if(compareString(input,"BUTTON_SCREEN_DISPLAY")) {irsend.sendRaw(BUTTON_SCREEN_DISPLAY,99, 38);return;}
+	if(compareString(input,"BUTTON_INTERNET")) {irsend.sendRaw(BUTTON_INTERNET,99, 38);return;}
+	if(compareString(input,"BUTTON_SUBTITLE")) {irsend.sendRaw(BUTTON_SUBTITLE,99, 38);return;}
+	if(compareString(input,"BUTTON_THREE_CHARACTER_INPUT")) {irsend.sendRaw(BUTTON_THREE_CHARACTER_INPUT,99, 38);return;}
+	if(compareString(input,"BUTTON_VOD_OPERATION")) {irsend.sendRaw(BUTTON_VOD_OPERATION,99, 38);return;}
+	if(compareString(input,"BUTTON_ONE")) {irsend.sendRaw(BUTTON_ONE,99, 38);return;}
+	if(compareString(input,"BUTTON_TWO")) {irsend.sendRaw(BUTTON_TWO,99, 38);return;}
+	if(compareString(input,"BUTTON_THREE")) {irsend.sendRaw(BUTTON_THREE,99, 38);return;}
+	if(compareString(input,"BUTTON_FOUR")) {irsend.sendRaw(BUTTON_FOUR,99, 38);return;}
+	if(compareString(input,"BUTTON_FIVE")) {irsend.sendRaw(BUTTON_FIVE,99, 38);return;}
+	if(compareString(input,"BUTTON_SIX")) {irsend.sendRaw(BUTTON_SIX,99, 38);return;}
+	if(compareString(input,"BUTTON_SEVEN")) {irsend.sendRaw(BUTTON_SEVEN,99, 38);return;}
+	if(compareString(input,"BUTTON_EIGHT")) {irsend.sendRaw(BUTTON_EIGHT,99, 38);return;}
+	if(compareString(input,"BUTTON_NINE")) {irsend.sendRaw(BUTTON_NINE,99, 38);return;}
+	if(compareString(input,"BUTTON_TEN")) {irsend.sendRaw(BUTTON_TEN,99, 38);return;}
+	if(compareString(input,"BUTTON_ELEVENT")) {irsend.sendRaw(BUTTON_ELEVENT,99, 38);return;}
+	if(compareString(input,"BUTTON_TWELVE")) {irsend.sendRaw(BUTTON_TWELVE,99, 38);return;}
+	if(compareString(input,"BUTTON_GROUND_D")) {irsend.sendRaw(BUTTON_GROUND_D,99, 38);return;}
+	if(compareString(input,"BUTTON_BS")) {irsend.sendRaw(BUTTON_BS,99, 38);return;}
+	if(compareString(input,"BUTTON_CS")) {irsend.sendRaw(BUTTON_CS,99, 38);return;}
+	if(compareString(input,"BUTTON_GROUND_A")) {irsend.sendRaw(BUTTON_GROUND_A,99, 38);return;}
+	if(compareString(input,"BUTTON_MUTE")) {irsend.sendRaw(BUTTON_MUTE,99, 38);return;}
+	if(compareString(input,"BUTTON_VOLUME_UP")) {irsend.sendRaw(BUTTON_VOLUME_UP,99, 38);return;}
+	if(compareString(input,"BUTTON_VOLUME_DOWN")) {irsend.sendRaw(BUTTON_VOLUME_DOWN,99, 38);return;}
+	if(compareString(input,"BUTTON_CHANNEL_UP")) {irsend.sendRaw(BUTTON_CHANNEL_UP,99, 38);return;}
+	if(compareString(input,"BUTTON_CHANNEL_DOWN")) {irsend.sendRaw(BUTTON_CHANNEL_DOWN,99, 38);return;}
+	if(compareString(input,"BUTTON_SWITCH_INPUT")) {irsend.sendRaw(BUTTON_SWITCH_INPUT,99, 38);return;}
+	if(compareString(input,"BUTTON_DATA_LINK")) {irsend.sendRaw(BUTTON_DATA_LINK,99, 38);return;}
+	if(compareString(input,"BUTTON_AV_POSITION")) {irsend.sendRaw(BUTTON_AV_POSITION,99, 38);return;}
+	if(compareString(input,"BUTTON_OFF_TIMER")) {irsend.sendRaw(BUTTON_OFF_TIMER,99, 38);return;}
+	if(compareString(input,"BUTTON_FAMI_LINK")) {irsend.sendRaw(BUTTON_FAMI_LINK,99, 38);return;}
+	if(compareString(input,"BUTTON_SCHEDULE")) {irsend.sendRaw(BUTTON_SCHEDULE,99, 38);return;}
+	if(compareString(input,"BUTTON_HOME")) {irsend.sendRaw(BUTTON_HOME,99, 38);return;}
+	if(compareString(input,"BUTTON_CHANNEL_INFO")) {irsend.sendRaw(BUTTON_CHANNEL_INFO,99, 38);return;}
+	if(compareString(input,"BUTTON_TOOL")) {irsend.sendRaw(BUTTON_TOOL,99, 38);return;}
+	if(compareString(input,"BUTTON_UP")) {irsend.sendRaw(BUTTON_UP,99, 38);return;}
+	if(compareString(input,"BUTTON_LEFT")) {irsend.sendRaw(BUTTON_LEFT,99, 38);return;}
+	if(compareString(input,"BUTTON_ENTER")) {irsend.sendRaw(BUTTON_ENTER,99, 38);return;}
+	if(compareString(input,"BUTTON_RIGHT")) {irsend.sendRaw(BUTTON_RIGHT,99, 38);return;}
+	if(compareString(input,"BUTTON_DOWN")) {irsend.sendRaw(BUTTON_DOWN,99, 38);return;}
+	if(compareString(input,"BUTTON_FINISH")) {irsend.sendRaw(BUTTON_FINISH,99, 38);return;}
+	if(compareString(input,"BUTTON_BACK")) {irsend.sendRaw(BUTTON_BACK,99, 38);return;}
+	if(compareString(input,"BUTTON_BLUE")) {irsend.sendRaw(BUTTON_BLUE,99, 38);return;}
+	if(compareString(input,"BUTTON_RED")) {irsend.sendRaw(BUTTON_RED,99, 38);return;}
+	if(compareString(input,"BUTTON_GREEN")) {irsend.sendRaw(BUTTON_GREEN,99, 38);return;}
+	if(compareString(input,"BUTTON_YELLOW")) {irsend.sendRaw(BUTTON_YELLOW,99, 38);return;}
+	delay(200);
 }
 
 unsigned long long convert(String input)
@@ -165,30 +162,25 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 	switch(type) {
 		case WStype_DISCONNECTED:
 			USE_SERIAL.printf("[WSc] Disconnected!\n");
-      USE_SERIAL.printf("reconnect ...\n");
-      delay(1000);
-      webSocket.begin(socketUrl, port, "/", "esp8266");
-      webSocket.onEvent(webSocketEvent);
+			USE_SERIAL.printf("reconnect ...\n");
+			delay(1000);
+			webSocket.begin(socketUrl, port, "/", "esp8266");
+			webSocket.onEvent(webSocketEvent);
 			break;
-		case WStype_CONNECTED: {
-			USE_SERIAL.printf("[WSc] Connected to url: %s\n", payload);
 
-			// send message to server when Connected
+		case WStype_CONNECTED: 
+			USE_SERIAL.printf("[WSc] Connected to url: %s\n", payload);
 			webSocket.sendTXT("Connected");
-		}
 			break;
+
 		case WStype_TEXT:
 			USE_SERIAL.printf("[WSc] get text: %s\n", payload);
-      handleToshibaArgs(payload);
-			// send message to server
-			//webSocket.sendTXT("message here");
+      		handleToshibaArgs(payload);
 			break;
+
 		case WStype_BIN:
 			USE_SERIAL.printf("[WSc] get binary length: %u\n", length);
 			hexdump(payload, length);
-
-			// send data to server
-			// webSocket.sendBIN(payload, length);
 			break;
 	}
 
@@ -196,15 +188,14 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 
 void setup() {
 	
-  // preparing GPIOs
-  pinMode(gpio0_pin, OUTPUT);
-  digitalWrite(gpio0_pin, LOW);
-  pinMode(gpio2_pin, OUTPUT);
-  digitalWrite(gpio2_pin, LOW);
-    delay(1000);
-    
-    USE_SERIAL.begin(115200);
+	// preparing GPIOs
+	pinMode(gpio0_pin, OUTPUT);
+	digitalWrite(gpio0_pin, LOW);
+	pinMode(gpio2_pin, OUTPUT);
+	digitalWrite(gpio2_pin, LOW);
+	delay(1000);
 
+	USE_SERIAL.begin(115200);
 	USE_SERIAL.setDebugOutput(true);
 
 	for(uint8_t t = 4; t > 0; t--) {
@@ -215,7 +206,6 @@ void setup() {
 
 	WiFiMulti.addAP(ssid, password);
 
-	//WiFi.disconnect();
 	while(WiFiMulti.run() != WL_CONNECTED) {
 		delay(100);
 	}
@@ -225,12 +215,9 @@ void setup() {
 
 	// event handler
 	webSocket.onEvent(webSocketEvent);
-
-	// try ever 5000 again if connection has failed
-	// webSocket.setReconnectInterval(5000);
 }
 
 void loop() {
 	webSocket.loop();
-  delay(500);
+	delay(500);
 }

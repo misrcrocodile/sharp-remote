@@ -1,5 +1,5 @@
 {
-  "name": "remoteWebsocketServer",
+  "name": "Remote Websocket Server",
   "version": "1.0.0",
   "description": "WebSocketServer for testing",
   "main": "index.js",
@@ -16,12 +16,8 @@
     "websocket",
     "arduino"
   ],
-  "author": "Markus Sattler",
+  "author": "misscrocodile",
   "license": "LGPLv2",
-  "bugs": {
-    "url": "https://github.com/Links2004/arduinoWebSockets/issues"
-  },
-  "homepage": "https://github.com/Links2004/arduinoWebSockets",
   "dependencies": {
     "express": "^4.16.1",
     "websocket": "^1.0.18"
